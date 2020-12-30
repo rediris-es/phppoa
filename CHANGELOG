@@ -1,0 +1,7 @@
+Version 2.5
+https://forja.rediris.es/svn/phppoa/tags/phpPoA-2.5
+(Feb 17, from trunk)
+
+ * Memcached backend support for all database types (PAPI authentication engine
+   and Invite authorization engine).
+ * Fix to support HTTPS detection on IIS servers with ISAPI in PAPI authentication engine.
