@@ -1,6 +1,6 @@
-#phpPoA 2.0
+# phpPoA 2.0
 
-##Contents of the distribution:
+## Contents of the distribution:
 
 README                This file
 GPL                   Text of the GNU General Public License, applicable to all the software
