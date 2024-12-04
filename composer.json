@@ -1,9 +1,9 @@
 {
-    "name": "rediris-es/poa2",
+    "name": "rediris-es/phppoa",
     "type": "library",
     "autoload": {
         "psr-4": {
-            "Rediris\\Poa2\\": "src/"
+            "Rediris\\PoA\\": "src/"
         }
     },
     "authors": [
