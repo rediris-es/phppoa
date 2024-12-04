@@ -1,5 +1,5 @@
 {
-    "name": "rediris/poa2",
+    "name": "rediris-es/poa2",
     "type": "library",
     "autoload": {
         "psr-4": {
