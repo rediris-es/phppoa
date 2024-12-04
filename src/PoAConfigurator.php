@@ -22,7 +22,7 @@
  * @author Jaime Perez <jaime.perez@rediris.es>
  * @filesource
  */
-
+namespace poa2;
 /**
  * Main configurator for the phpPoA.
  * @package phpPoA2

@@ -21,28 +21,33 @@
  * @version 2.0
  * @author Jaime Perez <jaime.perez@rediris.es>
  * @filesource
- */
-
-/**
- * Class that automatically redirects to error pages if any error is detected.
  * @package phpPoA2
  */
-class AutoPoA extends PoA {
+namespace poa2;
+class PoAUtils {
 
-    public function authenticate() {
-        if (!parent::authenticate()) {
-            header("Location: ".$this->cfg->getNoAuthErrorURL());
-            exit;
-        }
-        return true;
+    /**
+     * Return the internationalized message identified by the code 's'.
+     * @param s The identifier of the message.
+     * @param args An array of arguments that the message expects.
+     * @return string The human readable message already translated.
+     */
+    public static function msg($s, $args = array()) {
+        global $poa_messages;
+
+        return vsprintf($poa_messages[$s], $args);
     }
 
-    public function isAuthorized($user, $attrs, $engine = null) {
-        if (!parent::isAuthorized($user, $attrs, $engine)) {
-            header("Location: ".$this->cfg->getNoAuthErrorURL());
-            exit;
-        }
-        return true;
+    /**
+     * Return the language code identifying applicable to a messages file.
+     * @param filename The name of the file.
+     * @return string The internationalization code corresponding with the file.
+     */
+    public static function lang_code($filename) {
+        $pat[] = '/^.*\/messages-/';
+        $pat[] = '/\.php/';
+        $code = preg_replace($pat, '', $filename);
+        return $code;
     }
 
 }

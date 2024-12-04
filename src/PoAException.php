@@ -21,33 +21,27 @@
  * @version 2.0
  * @author Jaime Perez <jaime.perez@rediris.es>
  * @filesource
+ */
+namespace poa2;
+
+use Exception;
+
+/**
+ * Exception handler class for the phpPoA.
  * @package phpPoA2
  */
+class PoAException extends Exception {
+    private $args;
 
-class PoAUtils {
-
-    /**
-     * Return the internationalized message identified by the code 's'.
-     * @param s The identifier of the message.
-     * @param args An array of arguments that the message expects.
-     * @return string The human readable message already translated.
-     */
-    public static function msg($s, $args = array()) {
-        global $poa_messages;
-
-        return vsprintf($poa_messages[$s], $args);
+    public function __construct($message, $code, $args = null) {
+        $this->message = $message;
+        $this->args = $args;
+        $this->code = $code;
+        parent::__construct();
     }
 
-    /**
-     * Return the language code identifying applicable to a messages file.
-     * @param filename The name of the file.
-     * @return string The internationalization code corresponding with the file.
-     */
-    public static function lang_code($filename) {
-        $pat[] = '/^.*\/messages-/';
-        $pat[] = '/\.php/';
-        $code = preg_replace($pat, '', $filename);
-        return $code;
+    public function __toString() {
+        return "".PoAUtils::msg($this->message, $this->args);
     }
 
 }

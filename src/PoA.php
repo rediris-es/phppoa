@@ -23,9 +23,10 @@
  * @filesource
  */
 
+namespace RedIRIS\PoA;
+
 /**
  * @ignore
- */
 set_include_path(get_include_path().PATH_SEPARATOR.dirname(__FILE__).
                                     PATH_SEPARATOR.dirname(__FILE__)."/messages".
                                     PATH_SEPARATOR.dirname(__FILE__)."/lib".
@@ -34,11 +35,10 @@ set_include_path(get_include_path().PATH_SEPARATOR.dirname(__FILE__).
                                     PATH_SEPARATOR.dirname(__FILE__)."/lib/authn".
                                     PATH_SEPARATOR.dirname(__FILE__)."/lib/authz");
 
-require_once("definitions.php");
-require_once("PoAUtils.php");
-require_once("PoAEventHandler.php");
-include_once("AutoPoA.php");
-include_once("LitePoA.php");
+*/
+
+use Exception;
+
 
 /**
  * Standard class that implements all the functionallity of the phpPoA.

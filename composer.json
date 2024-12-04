@@ -1,0 +1,16 @@
+{
+    "name": "rediris/poa2",
+    "type": "library",
+    "autoload": {
+        "psr-4": {
+            "Rediris\\Poa2\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Jose Nuñez Herrero",
+            "email": "jose.nunez@getronics.com"
+        }
+    ],
+    "require": {}
+}

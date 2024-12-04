@@ -23,7 +23,7 @@
  * @filesource
  * @package phpPoA2
  */
-
+namespace poa2;
 /**
  * Class to handle events inside the library.
  */

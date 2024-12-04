@@ -23,22 +23,27 @@
  * @filesource
  */
 
+ namespace poa2;
 /**
- * Exception handler class for the phpPoA.
+ * Class that automatically redirects to error pages if any error is detected.
  * @package phpPoA2
  */
-class PoAException extends Exception {
-    private $args;
+class AutoPoA extends PoA {
 
-    public function __construct($message, $code, $args = null) {
-        $this->message = $message;
-        $this->args = $args;
-        $this->code = $code;
-        parent::__construct();
+    public function authenticate() {
+        if (!parent::authenticate()) {
+            header("Location: ".$this->cfg->getNoAuthErrorURL());
+            exit;
+        }
+        return true;
     }
 
-    public function __toString() {
-        return "".PoAUtils::msg($this->message, $this->args);
+    public function isAuthorized($user, $attrs, $engine = null) {
+        if (!parent::isAuthorized($user, $attrs, $engine)) {
+            header("Location: ".$this->cfg->getNoAuthErrorURL());
+            exit;
+        }
+        return true;
     }
 
 }
