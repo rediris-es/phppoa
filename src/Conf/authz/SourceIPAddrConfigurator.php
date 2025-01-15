@@ -21,34 +21,37 @@
  * @version 2.0
  * @author Jaime Perez <jaime.perez@rediris.es>
  * @filesource
- * @package phpPoA2
  */
-namespace RedIRIS\PoA;
-class PoAUtils {
+namespace RedIRIS\PoA\Conf\authz;
+/**
+ * Configurator class for the Source IP Address Authorization Engine.
+ * @package phpPoA2
+ * @subpackage SourceIPAddrAuthorizationEngine
+ */
+class SourceIPAddrConfigurator extends AuthorizationConfigurator {
+
+    protected $mandatory_options = array("AllowFrom", "DenyFrom");
 
     /**
-     * Return the internationalized message identified by the code 's'.
-     * @param s The identifier of the message.
-     * @param args An array of arguments that the message expects.
-     * @return string The human readable message already translated.
+     * Returns an array of IP addresses or networks that are authorized.
+     * @return array The array of IP addresses authorized.
      */
-    public static function msg(string $s = '', array $args = array()) {
-        global $poa_messages;
-        if (!is_null($s) && is_string($s) && isset($poa_messages[$s])) {
-            return vsprintf($poa_messages[$s], $args);
-        }
+    public function getAllowed() {
+        if (is_array($this->cfg['AllowFrom']))
+            return $this->cfg['AllowFrom'];
+        else
+            return array($this->cfg['AllowFrom']);
     }
 
     /**
-     * Return the language code identifying applicable to a messages file.
-     * @param filename The name of the file.
-     * @return string The internationalization code corresponding with the file.
+     * Returns an array of IP addresses or networks that are not authorized.
+     * @return array The array of IP addresses not authorized.
      */
-    public static function lang_code($filename) {
-        $pat[] = '/^.*\/messages-/';
-        $pat[] = '/\.php/';
-        $code = preg_replace($pat, '', $filename);
-        return $code;
+    public function getDenied() {
+        if (is_array($this->cfg['DenyFrom']))
+            return $this->cfg['DenyFrom'];
+        else
+            return array($this->cfg['DenyFrom']);
     }
 
 }

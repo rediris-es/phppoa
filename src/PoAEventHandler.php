@@ -23,7 +23,7 @@
  * @filesource
  * @package phpPoA2
  */
-namespace poa2;
+namespace RedIRIS\PoA;
 /**
  * Class to handle events inside the library.
  */
@@ -94,7 +94,9 @@ class PoAEventHandler {
                 }
             }
         }
-        trigger_error(PoAUtils::msg('class-not-found', array($class_name)), E_USER_WARNING);
+        $message = PoAUtils::msg('class-not-found', array($class_name)) ?? 'no_messages';
+        //trigger_error($message, E_USER_WARNING);
+        
         return false;
     }
 

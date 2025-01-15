@@ -22,7 +22,7 @@
  * @author Jaime Perez <jaime.perez@rediris.es>
  * @filesource
  */
-namespace poa2;
+namespace RedIRIS\PoA;
 /**
  * A simple class to write log messages to a file.
  * @package phpPoA2

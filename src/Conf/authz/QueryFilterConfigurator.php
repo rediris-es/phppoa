@@ -22,28 +22,30 @@
  * @author Jaime Perez <jaime.perez@rediris.es>
  * @filesource
  */
-
- namespace RedIRIS\PoA;
+namespace RedIRIS\PoA\Conf\authz;
 /**
- * Class that automatically redirects to error pages if any error is detected.
+ * Configurator for the query filter authorization engine.
  * @package phpPoA2
+ * @subpackage QueryFilterAuthorizationEngine
  */
-class AutoPoA extends PoA {
+class QueryFilterConfigurator extends AuthorizationConfigurator {
 
-    public function authenticate() {
-        if (!parent::authenticate()) {
-            header("Location: ".$this->cfg->getNoAuthErrorURL());
-            exit;
-        }
-        return true;
+    protected $mandatory_options = array("Allowed", "Denied");
+
+    /**
+     * Returns the patterns that match allowed URIs or query parameters.
+     * @return array The array with the allowed patterns.
+     */
+    public function getAllowedPatterns() {
+        return $this->cfg['Allowed'];
     }
 
-    public function isAuthorized($user, $attrs, $engine = null) {
-        if (!parent::isAuthorized($user, $attrs, $engine)) {
-            header("Location: ".$this->cfg->getNoAuthErrorURL());
-            exit;
-        }
-        return true;
+    /**
+     * Returns the patterns that match denied URIs or query parameters.
+     * @return array The array with the denied patterns.
+     */
+    public function getDeniedPatterns() {
+        return $this->cfg['Denied'];
     }
 
 }

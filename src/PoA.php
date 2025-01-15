@@ -25,17 +25,8 @@
 
 namespace RedIRIS\PoA;
 
-/**
- * @ignore
-set_include_path(get_include_path().PATH_SEPARATOR.dirname(__FILE__).
-                                    PATH_SEPARATOR.dirname(__FILE__)."/messages".
-                                    PATH_SEPARATOR.dirname(__FILE__)."/lib".
-                                    PATH_SEPARATOR.dirname(__FILE__)."/lib/db".
-                                    PATH_SEPARATOR.dirname(__FILE__)."/lib/crypto".
-                                    PATH_SEPARATOR.dirname(__FILE__)."/lib/authn".
-                                    PATH_SEPARATOR.dirname(__FILE__)."/lib/authz");
 
-*/
+set_include_path(get_include_path().PATH_SEPARATOR.dirname(__FILE__));
 
 use Exception;
 
@@ -47,7 +38,7 @@ use Exception;
 class PoA {
     protected $local_site;
     protected $cfg;
-    protected $log;
+    public $log;
     protected $authn_engine;
     protected $attributes;
     protected $authz_engines;
@@ -134,10 +125,11 @@ class PoA {
         $result = $this->authn_engine->addHook($name, $hook);
 
         // add hook for authorization engines
-        foreach ($this->authz_engines as $engine) {
-            $result |= $engine->addHook($name, $hook);
+        if (isset($this->authz_engines)) {
+            foreach ($this->authz_engines as $engine) {
+                $result |= $engine->addHook($name, $hook);
+            }
         }
-
         $this->clean();
         return $result;
     }
@@ -185,11 +177,8 @@ class PoA {
         if (empty($this->authn_engine)) {
             trigger_error(PoAUtils::msg('authn-engine-err', array()), E_USER_WARNING);
             $this->clean();
-            return AUTHN_FAILED;
+            return PoAConstants::AUTHN_FAILED;
         }
-
-        trigger_error(PoAUtils::msg("authenticating-via", array($this->cfg->getAuthnEngine())));
-
         $result = false;
         try {
             $result = $this->authn_engine->authenticate();
@@ -203,7 +192,7 @@ class PoA {
         }
 
         $this->clean();
-	return $result;
+	    return $result;
     }
 
     /**
@@ -220,20 +209,17 @@ class PoA {
         if (empty($this->authn_engine)) {
             trigger_error(PoAUtils::msg('authn-engine-err', array()), E_USER_WARNING);
             $this->clean();
-            return AUTHN_FAILED;
+            return PoAConstants::AUTHN_FAILED;
         }
-
         trigger_error(PoAUtils::msg("check-authn-status", array($this->cfg->getAuthnEngine())));
-
         $result = $this->authn_engine->isAuthenticated();
         if ($result) {
             trigger_error(PoAUtils::msg('authn-success', array($this->cfg->getAuthnEngine())), E_USER_WARNING);
         } else {
             trigger_error(PoAUtils::msg('authn-err', array()), E_USER_WARNING);
         }
-
         $this->clean();
-	return $result;
+	    return $result;
     }
 
     /**
@@ -244,7 +230,7 @@ class PoA {
         // register autoload function
         set_exception_handler(array($this->handler, "exceptionHandler"));
         set_error_handler(array($this->handler, "errorHandler"));
-
+        
         // check if we have an authentication engine configured
         if (empty($this->authn_engine)) {
             trigger_error(PoAUtils::msg('authn-engine-err', array()), E_USER_WARNING);
@@ -267,7 +253,7 @@ class PoA {
         // register autoload function
         set_exception_handler(array($this->handler, "exceptionHandler"));
         set_error_handler(array($this->handler, "errorHandler"));
-
+        trigger_error(PoAUtils::msg('authn-engine-err', array()), E_USER_WARNING);
         // check if we have an authentication engine configured
         if (empty($this->authn_engine)) {
             trigger_error(PoAUtils::msg('authn-engine-err', array()), E_USER_WARNING);
@@ -294,7 +280,7 @@ class PoA {
         if (empty($this->authn_engine)) {
             trigger_error(PoAUtils::msg('authn-engine-err', array()), E_USER_WARNING);
             $this->clean();
-            return AUTHN_FAILED;
+            return PoAConstants::AUTHN_FAILED;
         }
 
         $this->clean();

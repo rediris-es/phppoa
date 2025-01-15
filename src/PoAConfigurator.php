@@ -22,7 +22,9 @@
  * @author Jaime Perez <jaime.perez@rediris.es>
  * @filesource
  */
-namespace poa2;
+namespace RedIRIS\PoA;
+
+use RedIRIS\PoA\Conf\GenericConfigurator;
 /**
  * Main configurator for the phpPoA.
  * @package phpPoA2
@@ -39,7 +41,7 @@ class PoAConfigurator extends GenericConfigurator {
         $this->cfg["ROOT_DIR"] = dirname(__FILE__);
         $this->cfg['Language'] = "en_EN";
         include_once $this->cfg["ROOT_DIR"]."/messages/messages-".$this->cfg['Language'].".php";
-        $file_path = "PoA.conf.php";
+        $file_path = "/usr/local/lib/php/PoA.conf.php";
 
         // configure
         $v = get_cfg_var('poa_conf_file');
@@ -95,11 +97,11 @@ class PoAConfigurator extends GenericConfigurator {
     }
 
     public function getAuthzEngines() {
-        if (!@is_array($this->cfg['AuthzEngines'])) {
-            return (isset($this->cfg['AuthzEngines'])) ? array($this->cfg['AuthzEngines']) : array();
+        if (isset($this->cfg['AuthzEngines'])) {
+            return $this->cfg['AuthzEngines'];
         }
 
-        return @$this->cfg['AuthzEngines'];
+        return array();
     }
 
     public function getAuthnEngineConfFile() {

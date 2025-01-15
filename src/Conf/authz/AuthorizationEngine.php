@@ -22,29 +22,37 @@
  * @author Jaime Perez <jaime.perez@rediris.es>
  * @filesource
  */
+namespace RedIRIS\PoA\Conf\authz;
 
- namespace RedIRIS\PoA;
-/**
- * Class that automatically redirects to error pages if any error is detected.
- * @package phpPoA2
- */
-class AutoPoA extends PoA {
+use RedIRIS\PoA\Conf\GenericEngine;
 
-    public function authenticate() {
-        if (!parent::authenticate()) {
-            header("Location: ".$this->cfg->getNoAuthErrorURL());
-            exit;
-        }
-        return true;
-    }
+abstract class AuthorizationEngine extends GenericEngine {
 
-    public function isAuthorized($user, $attrs, $engine = null) {
-        if (!parent::isAuthorized($user, $attrs, $engine)) {
-            header("Location: ".$this->cfg->getNoAuthErrorURL());
-            exit;
-        }
-        return true;
-    }
+    protected $engine_type = "Authz";
+
+    /**
+     * Check authorization for the specified user.
+     * @param user The string that identifies the user.
+     * @param attrs All attributes related to the user.
+     * @return boolean AUTHZ_SUCCESS if the user is authorized, AUTHZ_FAILED
+     * in any other case.
+     */
+    public abstract function isAuthorized($user, $attrs);
+
+    /**
+     * @return array
+     */
+    public abstract function getAuthorizedList();
+
+    /**
+     * @return boolean
+     */
+    public abstract function authorize($user, $attrs, $ref, $expires = 0);
+
+    /**
+     * @return boolean
+     */
+    public abstract function revoke($mail);
 
 }
 

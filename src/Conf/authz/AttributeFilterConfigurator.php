@@ -21,29 +21,35 @@
  * @version 2.0
  * @author Jaime Perez <jaime.perez@rediris.es>
  * @filesource
- */
-
- namespace RedIRIS\PoA;
-/**
- * Class that automatically redirects to error pages if any error is detected.
  * @package phpPoA2
+ * @subpackage AttributeFilterAuthorizationEngine
  */
-class AutoPoA extends PoA {
+namespace RedIRIS\PoA\Conf\authz;
+/**
+ * Configurator for the Attribute Filter Authorization Engine.
+ * @package phpPoA2
+ * @subpackage AttributeFilterAuthorizationEngine
+ */
+class AttributeFilterConfigurator extends AuthorizationConfigurator {
 
-    public function authenticate() {
-        if (!parent::authenticate()) {
-            header("Location: ".$this->cfg->getNoAuthErrorURL());
-            exit;
-        }
-        return true;
+    protected $mandatory_options = array("Allowed", "Denied");
+
+    /**
+     * Returns an array of attributes that would be allowed if their values match
+     * any of the patterns for each attribute.
+     * @return array The array of attribute patterns allowed.
+     */
+    public function getAllowedAttributes() {
+        return $this->cfg['Allowed'];
     }
 
-    public function isAuthorized($user, $attrs, $engine = null) {
-        if (!parent::isAuthorized($user, $attrs, $engine)) {
-            header("Location: ".$this->cfg->getNoAuthErrorURL());
-            exit;
-        }
-        return true;
+    /**
+     * Returns an array of attributes that would be denied if their values match
+     * any of the patterns for each attribute.
+     * @return array The array of attribute patterns denied.
+     */
+    public function getDeniedAttributes() {
+        return $this->cfg['Denied'];
     }
 
 }

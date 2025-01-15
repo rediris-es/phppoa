@@ -22,8 +22,7 @@
  * @author Jaime Perez <jaime.perez@rediris.es>
  * @filesource
  */
-namespace poa2;
-
+namespace RedIRIS\PoA;
 
 /**
  * Class that embbeds all functionallity (authentication, attribute collection and authorization) in one method,

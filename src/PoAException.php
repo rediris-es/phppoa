@@ -22,7 +22,7 @@
  * @author Jaime Perez <jaime.perez@rediris.es>
  * @filesource
  */
-namespace poa2;
+namespace RedIRIS\PoA;
 
 use Exception;
 

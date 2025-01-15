@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @copyright Copyright 2005-2010 RedIRIS, http://www.rediris.es/
  *
@@ -23,34 +24,66 @@
  * @filesource
  * @package phpPoA2
  */
+
 namespace RedIRIS\PoA;
-class PoAUtils {
+
+class PoAConstants
+{
+
 
     /**
-     * Return the internationalized message identified by the code 's'.
-     * @param s The identifier of the message.
-     * @param args An array of arguments that the message expects.
-     * @return string The human readable message already translated.
+     * Authentication succeeded.
      */
-    public static function msg(string $s = '', array $args = array()) {
-        global $poa_messages;
-        if (!is_null($s) && is_string($s) && isset($poa_messages[$s])) {
-            return vsprintf($poa_messages[$s], $args);
-        }
-    }
+    const AUTHN_SUCCESS = true;
 
     /**
-     * Return the language code identifying applicable to a messages file.
-     * @param filename The name of the file.
-     * @return string The internationalization code corresponding with the file.
+     * Authentication failed.
      */
-    public static function lang_code($filename) {
-        $pat[] = '/^.*\/messages-/';
-        $pat[] = '/\.php/';
-        $code = preg_replace($pat, '', $filename);
-        return $code;
-    }
+    const AUTHN_FAILED = false;
+
+    /**
+     * Authorization succeeded.
+     */
+    const AUTHZ_SUCCESS = true;
+
+    /**
+     * Authorization failed.
+     */
+    const AUTHZ_FAILED = false;
+
+    /**
+     * Authentication failed error.
+     */
+    const NOAUTH_ERR = 0;
+
+    /**
+     * A system related error.
+     */
+    const SYSTEM_ERR = 1;
+
+    /**
+     * A configuration related error.
+     */
+    const CONFIG_ERR = 2;
+
+    /**
+     * An invitation related error.
+     */
+    const INVITE_ERR = 3;
+
+    /**
+     * An error triggered by the user.
+     */
+    const USER_ERR =   4;
+
+    /**
+     * 'GPoA' type redirection in the PAPI 1.5 protocol.
+     */
+    const GPOA_T = 0;
+
+    /**
+     * 'AS' type redirection in the PAPI 1.5 protocol.
+     */
+    const AS_T =   1;
 
 }
-
-?>

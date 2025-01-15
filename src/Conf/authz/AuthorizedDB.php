@@ -3,12 +3,12 @@
  * @copyright Copyright 2005-2010 RedIRIS, http://www.rediris.es/
  *
  * This file is part of phpPoA2.
- *
+ *  
  * phpPoA2 is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
- *
+ *  
  * phpPoA2 is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
@@ -22,30 +22,14 @@
  * @author Jaime Perez <jaime.perez@rediris.es>
  * @filesource
  */
-
- namespace RedIRIS\PoA;
+namespace RedIRIS\PoA\Conf\authz;
 /**
- * Class that automatically redirects to error pages if any error is detected.
+ * Generic interface for a PAPI request database.
  * @package phpPoA2
+ * @subpackage InviteAuthorizationEngine
  */
-class AutoPoA extends PoA {
+interface AuthorizedDB {
 
-    public function authenticate() {
-        if (!parent::authenticate()) {
-            header("Location: ".$this->cfg->getNoAuthErrorURL());
-            exit;
-        }
-        return true;
-    }
-
-    public function isAuthorized($user, $attrs, $engine = null) {
-        if (!parent::isAuthorized($user, $attrs, $engine)) {
-            header("Location: ".$this->cfg->getNoAuthErrorURL());
-            exit;
-        }
-        return true;
-    }
+    public function replace_authorization($alias, $attributes, $email, $expires);
 
 }
-
-?>

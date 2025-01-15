@@ -22,28 +22,19 @@
  * @author Jaime Perez <jaime.perez@rediris.es>
  * @filesource
  */
+namespace RedIRIS\PoA\Conf\authz;
 
- namespace RedIRIS\PoA;
-/**
- * Class that automatically redirects to error pages if any error is detected.
- * @package phpPoA2
- */
-class AutoPoA extends PoA {
+use RedIRIS\PoA\Conf\GenericConfigurator;
 
-    public function authenticate() {
-        if (!parent::authenticate()) {
-            header("Location: ".$this->cfg->getNoAuthErrorURL());
-            exit;
-        }
-        return true;
-    }
+abstract class AuthorizationConfigurator extends GenericConfigurator {
 
-    public function isAuthorized($user, $attrs, $engine = null) {
-        if (!parent::isAuthorized($user, $attrs, $engine)) {
-            header("Location: ".$this->cfg->getNoAuthErrorURL());
-            exit;
-        }
-        return true;
+    /**
+     * Determines the default behaviour of the authorization engine, whether it should
+     * authorize or not if no pattern (nor allowed nor denied) matches.
+     * @return boolean true if authorization succeeds by default, false in any other case.
+     */
+    public function getDefaultBehaviour() {
+        return (isset($this->cfg['Default'])) ? $this->cfg['Default'] : false;
     }
 
 }
